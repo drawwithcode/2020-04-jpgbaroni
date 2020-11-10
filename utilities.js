@@ -103,7 +103,7 @@ function makePixelPhoto() {
   capture.updatePixels();
   let valuespersec = 80;
   for (let i = 0; i < valuespersec/fps; i++) {
-    stocksPerformance.push(stocksPerformance[stocksPerformance.length-1]*exp(randomGaussian(0.8/widthPh, 0.01)));
+    stocksPerformance.push(stocksPerformance[stocksPerformance.length-1]*exp(randomGaussian(0.8/widthPh, 0.20/sqrt(widthPh))));
     stocksTime ++;
   }
   while (stocksPerformance.length > widthPh) {
