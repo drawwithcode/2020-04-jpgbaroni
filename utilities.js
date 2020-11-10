@@ -83,16 +83,16 @@ function makePixelPhoto() {
   let leftMarginPh = (wSize[0]-wSize[1]*capture.width/capture.height)/2;
   let widthPh = wSize[1]*capture.width/capture.height;
   let sizeSample = [64,48];
-  let col;
+  let col1,col2,col3;
   capture.loadPixels();
   for (let x = 0; x < sizeSample[0]; x++) {
     for (let y = 0; y < sizeSample[1]; y++) {
       //col = get(round(x*capture.width/sizeSample[0]), round(y*capture.height/sizeSample[1]));
-      col = (capture.pixels[(x*capture.width/sizeSample[0]+y*capture.height/sizeSample[1]*capture.width)*4]+
-            capture.pixels[(x*capture.width/sizeSample[0]+y*capture.height/sizeSample[1]*capture.width)*4+1]+
-            capture.pixels[(x*capture.width/sizeSample[0]+y*capture.height/sizeSample[1]*capture.width)*4+2])/3/255;
+      col1 = capture.pixels[(x*capture.width/sizeSample[0]+y*capture.height/sizeSample[1]*capture.width)*4];
+      col2 = capture.pixels[(x*capture.width/sizeSample[0]+y*capture.height/sizeSample[1]*capture.width)*4+1];
+      col3 = capture.pixels[(x*capture.width/sizeSample[0]+y*capture.height/sizeSample[1]*capture.width)*4+2];
       push();
-      fill(50,255,50,col*255);
+      fill(col1*1.25,col2*1.5,col3*1.25,200);
       noStroke();
       textAlign(CENTER,CENTER);
       textSize(20);
