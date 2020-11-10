@@ -6,6 +6,8 @@ let gui;
 let descTime = 0;
 let investing = false;
 let capture;
+let stocksPerformance = [100];
+let stocksTime =0;
 
 function preload(){
   degrees(radians);
@@ -54,27 +56,36 @@ function draw() {
   background(0);
   // put drawing code here
 
-  if (random(0,1) < 0.25) {
-    currencies.push(new moneyFalling());
-  }
   if(params.p != "invest") {
+    if (investing) {
+      investing = false;
+      fps = 20;
+      frameRate(fps);
+    }
     investing = false;
-    if (random(0,1) < 0.25) {
+    if (random(0,1) < 0.5) {
       currencies.push(new moneyFalling());
+    }
+
+    for (var ic = 0; ic < currencies.length; ic++) {
+      if(currencies[ic].tickit()) {
+        currencies.splice(ic,1);
+        ic--;
+      }
     }
   }
   else {
-    investing = true;
-    image(capture,(wSize[0]-wSize[1]*capture.width/capture.height)/2,0,wSize[1]*capture.width/capture.height,wSize[1]);
-    typeText(["invest in yourself"],min(wSize[0]/20,wSize[1]/18,80),[wSize[0]/2,wSize[1]-100],frameCount/fps,0,[CENTER,CENTER],false);
+    if (!investing) {
+      investing = true;
+      fps = 8;
+      frameRate(fps);
+    }
+
+    //image(capture,(wSize[0]-wSize[1]*capture.width/capture.height)/2,0,wSize[1]*capture.width/capture.height,wSize[1]);
+    makePixelPhoto();
+    //typeText(["invest in yourself"],min(wSize[0]/20,wSize[1]/18,80),[wSize[0]/2,wSize[1]-100],frameCount/fps,0,[CENTER,CENTER],false);
   }
 
-  for (var ic = 0; ic < currencies.length; ic++) {
-    if(currencies[ic].tickit()) {
-      currencies.splice(ic,1);
-      ic--;
-    }
-  }
 
   if(typeText(["Submartingale", "Dynamic", "Short-Term", "Renewable", "Equity", "Fund"],min(wSize[0]/15,wSize[1]/12,80),[wSize[0]/2,wSize[1]/2],frameCount/fps,0,[CENTER,CENTER])) {
     if (header.style("display") == "none") {
